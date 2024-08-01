@@ -31,7 +31,7 @@ export default defineConfig(({mode})=>{
           }
       }
     },
-    base: mode === "production" ? '/Workflow-Vue3/dist/' : '/',
+    base: mode  === "production" ? '/Workflow-Vue3/dist/' : '/',
     plugins: [
       vue(),
       AutoImport({

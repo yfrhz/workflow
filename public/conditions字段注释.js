@@ -3,15 +3,15 @@ export default {
   "msg": "操作成功",
   "data": [
     {
-      //条件id  columnId == 0 为发起人
+      //条件id  columnId  ===  0 为发起人
       "columnId": "1090",
-      //columnType == "String" && showType == "3"为多选  columnType == "Double"为区间
+      //columnType  ===  "String" && showType  ===  "3"为多选  columnType  ===  "Double"为区间
       "showType": "1", 
       "showName": "预计采购总费用",
       //columnName 条件自定义字段
       "columnName": "planProcurementTotalMoney",
       "columnType": "Double",
-      //fixedDownBoxValue 匹配 columnType == "String" && showType == "3"时子选项内容
+      //fixedDownBoxValue 匹配 columnType  ===  "String" && showType  ===  "3"时子选项内容
       "fixedDownBoxValue": ""
     },
     {

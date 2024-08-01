@@ -13,7 +13,7 @@
                     <span v-for="(item,index) in copyerConfig.nodeUserList" :key="index">{{item.name}}
                         <img src="@/assets/images/add-close1.png" @click="$func.removeEle(copyerConfig.nodeUserList,item,'targetId')">
                     </span>
-                    <a v-if="copyerConfig.nodeUserList&&copyerConfig.nodeUserList.length!=0" @click="copyerConfig.nodeUserList=[]">清除</a>
+                    <a v-if="copyerConfig.nodeUserList&&copyerConfig.nodeUserList.length !== 0" @click="copyerConfig.nodeUserList=[]">清除</a>
                 </p>
                 <el-checkbox-group v-model="ccSelfSelectFlag" class="clear">
                     <el-checkbox :label="1">允许发起人自选抄送人</el-checkbox>
@@ -54,7 +54,7 @@ let visible = computed({
 })
 watch(copyerConfig1, (val) => {
     copyerConfig.value = val.value;
-    ccSelfSelectFlag.value = copyerConfig.value.ccSelfSelectFlag == 0 ? [] : [copyerConfig.value.ccSelfSelectFlag]
+    ccSelfSelectFlag.value = copyerConfig.value.ccSelfSelectFlag  ===  0 ? [] : [copyerConfig.value.ccSelfSelectFlag]
 })
 
 const addCopyer = () => {
@@ -66,7 +66,7 @@ const sureCopyer = (data) => {
     copyerVisible.value = false;
 }
 const saveCopyer = () => {
-    copyerConfig.value.ccSelfSelectFlag = ccSelfSelectFlag.value.length == 0 ? 0 : 1;
+    copyerConfig.value.ccSelfSelectFlag = ccSelfSelectFlag.value.length  ===  0 ? 0 : 1;
     copyerConfig.value.error = !$func.copyerStr(copyerConfig.value);
     setCopyerConfig({
         value: copyerConfig.value,

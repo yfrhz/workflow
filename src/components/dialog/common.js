@@ -31,7 +31,7 @@ export let getDebounceData = (event, type = 1) => {
         pageNum: 1,
         pageSize: 30
       }
-      if (type == 1) {
+      if (type  ===  1) {
         departments.value.childDepartments = [];
         let res = await getEmployees(data)
         departments.value.employees = res.data.list
@@ -40,7 +40,7 @@ export let getDebounceData = (event, type = 1) => {
         roles.value = res.data.list
       }
     } else {
-      type == 1 ? await getDepartmentList() : await getRoleList();
+      type  ===  1 ? await getDepartmentList() : await getRoleList();
     }
   })()
 }

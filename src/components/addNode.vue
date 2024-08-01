@@ -43,9 +43,9 @@ let emits = defineEmits(['update:childNodeP'])
 let visible = ref(false)
 const addType = (type)=> {
     visible.value = false;
-    if (type != 4) {
+    if (type  !==  4) {
         var data;
-        if (type == 1) {
+        if (type  ===  1) {
             data = {
                 "nodeName": "审核人",
                 "error": true,
@@ -60,7 +60,7 @@ const addType = (type)=> {
                 "childNode": props.childNodeP,
                 "nodeUserList": []
             }
-        } else if (type == 2) {
+        } else if (type  ===  2) {
             data = {
                 "nodeName": "抄送人",
                 "type": 2,

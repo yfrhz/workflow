@@ -18,16 +18,16 @@
                 <p class="tip">当审批单同时满足以下条件时进入此流程</p>
                 <ul>
                     <li v-for="(item,index) in conditionConfig.conditionList" :key="index">
-                        <span class="ellipsis">{{item.type==1 ? '发起人':item.showName}}：</span>
-                        <div v-if="item.type==1">
+                        <span class="ellipsis">{{item.type === 1 ? '发起人':item.showName}}：</span>
+                        <div v-if="item.type === 1">
                             <p :class="conditionConfig.nodeUserList.length > 0?'selected_list':''" @click.self="addConditionRole" style="cursor:text">
                                 <span v-for="(item1,index1) in conditionConfig.nodeUserList" :key="index1">
                                     {{item1.name}}<img src="@/assets/images/add-close1.png" @click="$func.removeEle(conditionConfig.nodeUserList,item1,'targetId')">
                                 </span>
-                                <input type="text" placeholder="请选择具体人员/角色/部门" v-if="conditionConfig.nodeUserList.length == 0" @click="addConditionRole">
+                                <input type="text" placeholder="请选择具体人员/角色/部门" v-if="conditionConfig.nodeUserList.length  ===  0" @click="addConditionRole">
                             </p>
                         </div>
-                        <div v-else-if="item.columnType == 'String' && item.showType == 3">
+                        <div v-else-if="item.columnType  ===  'String' && item.showType  ===  3">
                             <p class="check_box">
                                 <a :class="$func.toggleStrClass(item,item1.key)&&'active'" @click="toStrChecked(item,item1.key)"
                                 v-for="(item1,index1) in JSON.parse(item.fixedDownBoxValue)" :key="index1">{{item1.value}}</a>
@@ -35,12 +35,12 @@
                         </div>
                         <div v-else>
                             <p>
-                                <select v-model="item.optType" :style="'width:'+(item.optType==6?370:100)+'px'" @change="changeOptType(item)">
+                                <select v-model="item.optType" :style="'width:'+(item.optType === 6?370:100)+'px'" @change="changeOptType(item)">
                                     <option v-for="({value, label}) in optTypes" :value="value" :key="value">{{ label }}</option>
                                 </select>
-                                <input v-if="item.optType!=6" type="text" :placeholder="'请输入'+item.showName" v-enter-number="2" v-model="item.zdy1">
+                                <input v-if="item.optType !== 6" type="text" :placeholder="'请输入'+item.showName" v-enter-number="2" v-model="item.zdy1">
                             </p>
-                            <p v-if="item.optType==6">
+                            <p v-if="item.optType === 6">
                                 <input type="text" style="width:75px;" class="mr_10" v-enter-number="2" v-model="item.zdy1">
                                 <select style="width:60px;" v-model="item.opt1">
                                     <option v-for="({value, label}) in opt1s" :value="value" :key="value">{{ label }}</option>
@@ -52,8 +52,8 @@
                                 <input type="text" style="width:75px;" v-enter-number="2" v-model="item.zdy2">
                             </p>
                         </div>
-                        <a v-if="item.type==1" @click="conditionConfig.nodeUserList= [];$func.removeEle(conditionConfig.conditionList,item,'columnId')">删除</a>
-                        <a v-if="item.type==2" @click="$func.removeEle(conditionConfig.conditionList,item,'columnId')">删除</a>
+                        <a v-if="item.type === 1" @click="conditionConfig.nodeUserList= [];$func.removeEle(conditionConfig.conditionList,item,'columnId')">删除</a>
+                        <a v-if="item.type === 2" @click="$func.removeEle(conditionConfig.conditionList,item,'columnId')">删除</a>
                     </li>
                 </ul>
                 <el-button type="primary" @click="addCondition">添加条件</el-button>
@@ -124,7 +124,7 @@ watch(conditionsConfig1, (val) => {
 })
 
 const changeOptType = (item) => {
-    if (item.optType == 1) {
+    if (item.optType  ===  1) {
         item.zdy1 = 2;
     } else {
         item.zdy1 = 1;
@@ -145,7 +145,7 @@ const removeStrEle = (item, key) => {
     let a = item.zdy1 ? item.zdy1.split(",") : []
     var includesIndex;
     a.map((item, index) => {
-        if (item == key) {
+        if (item  ===  key) {
             includesIndex = index
         }
     });
@@ -160,10 +160,10 @@ const addCondition = async () => {
     if (conditionConfig.value.conditionList) {
         for (var i = 0; i < conditionConfig.value.conditionList.length; i++) {
             var { columnId } = conditionConfig.value.conditionList[i]
-            if (columnId == 0) {
+            if (columnId  ===  0) {
                 conditionList.value.push({ columnId: 0 })
             } else {
-                conditionList.value.push(conditions.value.filter(item => { return item.columnId == columnId; })[0])
+                conditionList.value.push(conditions.value.filter(item => { return item.columnId  ===  columnId; })[0])
             }
         }
     }
@@ -176,7 +176,7 @@ const sureCondition = () => {
         if ($func.toggleClass(conditionConfig.value.conditionList, conditionList.value[i], "columnId")) {
             continue;
         }
-        if (columnId == 0) {
+        if (columnId  ===  0) {
             conditionConfig.value.nodeUserList = [];
             conditionConfig.value.conditionList.push({
                 "type": 1,
@@ -184,7 +184,7 @@ const sureCondition = () => {
                 "showName": '发起人'
             });
         } else {
-            if (columnType == "Double") {
+            if (columnType  ===  "Double") {
                 conditionConfig.value.conditionList.push({
                     "showType": showType,
                     "columnId": columnId,
@@ -198,7 +198,7 @@ const sureCondition = () => {
                     "columnDbname": columnName,
                     "columnType": columnType,
                 })
-            } else if (columnType == "String" && showType == "3") {
+            } else if (columnType  ===  "String" && showType  ===  "3") {
                 conditionConfig.value.conditionList.push({
                     "showType": showType,
                     "columnId": columnId,
@@ -229,7 +229,7 @@ const saveCondition = () => {
         item.priorityLevel = index + 1
     });
     for (var i = 0; i < conditionsConfig.value.conditionNodes.length; i++) {
-        conditionsConfig.value.conditionNodes[i].error = $func.conditionStr(conditionsConfig.value, i) == "请设置条件" && i != conditionsConfig.value.conditionNodes.length - 1
+        conditionsConfig.value.conditionNodes[i].error = $func.conditionStr(conditionsConfig.value, i)  ===  "请设置条件" && i  !==  conditionsConfig.value.conditionNodes.length - 1
     }
     setConditionsConfig({
         value: conditionsConfig.value,

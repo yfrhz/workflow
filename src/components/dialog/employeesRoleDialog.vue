@@ -7,7 +7,7 @@
                   <el-tab-pane label="组织架构" name="1"></el-tab-pane>
                   <el-tab-pane label="角色列表" name="2"></el-tab-pane>
               </el-tabs>
-              <p class="ellipsis tree_nav" v-if="activeName === '1' && !searchVal">
+              <p class="ellipsis tree_nav" v-if="activeName  === '1' && !searchVal">
                   <span @click="getDepartmentList(0)" class="ellipsis">天下</span>
                   <span v-for="(item,index) in departments.titleDepartments" class="ellipsis" 
                   :key="index+'a'" @click="getDepartmentList(item.id)">{{item.departmentName}}</span>   
@@ -57,7 +57,7 @@ let checkedEmployessList = ref([])
 let checkedDepartmentList = ref([])
 let activeName = ref('1')
 let list = computed(()=> {
-  if(activeName.value === '2'){
+  if(activeName.value  === '2'){
     return [{
       type: 'role', 
       not: false,
@@ -105,15 +105,15 @@ watch(()=> props.visible, (val)=>{
     activeName.value = "1";
     getDepartmentList();
     searchVal.value = "";
-    checkedEmployessList.value = props.data.filter(item=>item.type===1).map(({name,targetId})=>({
+    checkedEmployessList.value = props.data.filter(item=>item.type ===1).map(({name,targetId})=>({
       employeeName: name,
       id: targetId
     }));
-    checkedRoleList.value = props.data.filter(item=>item.type===2).map(({name,targetId})=>({
+    checkedRoleList.value = props.data.filter(item=>item.type ===2).map(({name,targetId})=>({
       roleName: name,
       roleId: targetId
     }));
-    checkedDepartmentList.value = props.data.filter(item=>item.type===3).map(({name,targetId})=>({
+    checkedDepartmentList.value = props.data.filter(item=>item.type ===3).map(({name,targetId})=>({
       departmentName: name,
       id: targetId
     }));
@@ -127,7 +127,7 @@ let total = computed(()=> {
 
 const handleClick = ()=> {
   searchVal.value = "";
-  if (activeName.value === '1') {
+  if (activeName.value  === '1') {
       getDepartmentList();
   } else {
       getRoleList();

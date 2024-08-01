@@ -6,11 +6,11 @@
 -->
 <template>
   <div class="node-wrap" v-if="nodeConfig.type < 3">
-    <div class="node-wrap-box" :class="(nodeConfig.type == 0 ? 'start-node ' : '') +(isTried && nodeConfig.error ? 'active error' : '')">
+    <div class="node-wrap-box" :class="(nodeConfig.type  ===  0 ? 'start-node ' : '') +(isTried && nodeConfig.error ? 'active error' : '')">
         <div class="title" :style="`background: rgb(${bgColors[nodeConfig.type]});`">
-          <span v-if="nodeConfig.type == 0">{{ nodeConfig.nodeName }}</span>
+          <span v-if="nodeConfig.type  ===  0">{{ nodeConfig.nodeName }}</span>
           <template v-else>
-            <span class="iconfont">{{nodeConfig.type == 1?'':''}}</span>
+            <span class="iconfont">{{nodeConfig.type  ===  1?'':''}}</span>
             <input
               v-if="isInput"
               type="text"
@@ -38,7 +38,7 @@
     </div>
     <addNode v-model:childNodeP="nodeConfig.childNode" />
   </div>
-  <div class="branch-wrap" v-if="nodeConfig.type == 4">
+  <div class="branch-wrap" v-if="nodeConfig.type  ===  4">
     <div class="branch-box-wrap">
       <div class="branch-box">
         <button class="add-branch" @click="addTerm">添加条件</button>
@@ -46,7 +46,7 @@
           <div class="condition-node">
             <div class="condition-node-box">
               <div class="auto-judge" :class="isTried && item.error ? 'error active' : ''">
-                <div class="sort-left" v-if="index != 0" @click="arrTransfer(index, -1)">&lt;</div>
+                <div class="sort-left" v-if="index  !==  0" @click="arrTransfer(index, -1)">&lt;</div>
                 <div class="title-wrapper">
                   <input
                     v-if="isInputList[index]"
@@ -61,7 +61,7 @@
                   <span class="priority-title" @click="setPerson(item.priorityLevel)">优先级{{ item.priorityLevel }}</span>
                   <i class="anticon anticon-close close" @click="delTerm(index)"></i>
                 </div>
-                <div class="sort-right" v-if="index != nodeConfig.conditionNodes.length - 1" @click="arrTransfer(index)">&gt;</div>
+                <div class="sort-right" v-if="index  !==  nodeConfig.conditionNodes.length - 1" @click="arrTransfer(index)">&gt;</div>
                 <div class="content" @click="setPerson(item.priorityLevel)">{{ $func.conditionStr(nodeConfig, index) }}</div>
                 <div class="error_tip" v-if="isTried && item.error">
                     <i class="anticon anticon-exclamation-circle"></i>
@@ -71,11 +71,11 @@
             </div>
           </div>
           <nodeWrap v-if="item.childNode" v-model:nodeConfig="item.childNode" />
-          <template v-if="index == 0">
+          <template v-if="index  ===  0">
             <div class="top-left-cover-line"></div>
             <div class="bottom-left-cover-line"></div>
           </template>
-          <template v-if="index == nodeConfig.conditionNodes.length - 1">
+          <template v-if="index  ===  nodeConfig.conditionNodes.length - 1">
             <div class="top-right-cover-line"></div>
             <div class="bottom-right-cover-line"></div>
           </template>
@@ -108,8 +108,8 @@ let defaultText = computed(() => {
     return placeholderList[props.nodeConfig.type]
 });
 let showText = computed(() => {
-    if (props.nodeConfig.type == 0) return $func.arrToStr(props.flowPermission) || '所有人'
-    if (props.nodeConfig.type == 1) return $func.setApproverStr(props.nodeConfig)
+    if (props.nodeConfig.type  ===  0) return $func.arrToStr(props.flowPermission) || '所有人'
+    if (props.nodeConfig.type  ===  1) return $func.setApproverStr(props.nodeConfig)
     return $func.copyerStr(props.nodeConfig)
 });
 
@@ -117,15 +117,15 @@ let isInputList = ref([]);
 let isInput = ref(false);
 const resetConditionNodesErr = () => {
     for (var i = 0; i < props.nodeConfig.conditionNodes.length; i++) {
-        props.nodeConfig.conditionNodes[i].error = $func.conditionStr(props.nodeConfig, i) == "请设置条件" && i != props.nodeConfig.conditionNodes.length - 1;
+        props.nodeConfig.conditionNodes[i].error = $func.conditionStr(props.nodeConfig, i)  ===  "请设置条件" && i  !==  props.nodeConfig.conditionNodes.length - 1;
     }
 }
 onMounted(() => {
-    if (props.nodeConfig.type == 1) {
+    if (props.nodeConfig.type  ===  1) {
         props.nodeConfig.error = !$func.setApproverStr(props.nodeConfig);
-    } else if (props.nodeConfig.type == 2) {
+    } else if (props.nodeConfig.type  ===  2) {
         props.nodeConfig.error = !$func.copyerStr(props.nodeConfig);
-    } else if (props.nodeConfig.type == 4) {
+    } else if (props.nodeConfig.type  ===  4) {
         resetConditionNodesErr()
     }
 });
@@ -147,35 +147,35 @@ let approverConfig1 = computed(()=> store.approverConfig1)
 let copyerConfig1 = computed(()=> store.copyerConfig1)
 let conditionsConfig1 = computed(()=> store.conditionsConfig1)
 watch(flowPermission1, (flow) => {
-    if (flow.flag && flow.id === _uid) {
+    if (flow.flag && flow.id  === _uid) {
         emits("update:flowPermission", flow.value);
     }
 });
 watch(approverConfig1, (approver) => {
-    if (approver.flag && approver.id === _uid) {
+    if (approver.flag && approver.id  === _uid) {
         emits("update:nodeConfig", approver.value);
     }
 });
 watch(copyerConfig1, (copyer) => {
-    if (copyer.flag && copyer.id === _uid) {
+    if (copyer.flag && copyer.id  === _uid) {
         emits("update:nodeConfig", copyer.value);
     }
 });
 watch(conditionsConfig1, (condition) => {
-    if (condition.flag && condition.id === _uid) {
+    if (condition.flag && condition.id  === _uid) {
         emits("update:nodeConfig", condition.value);
     }
 });
 
 const clickEvent = (index) => {
-    if (index || index === 0) {
+    if (index || index  === 0) {
         isInputList.value[index] = true;
     } else {
         isInput.value = true;
     }
 };
 const blurEvent = (index) => {
-    if (index || index === 0) {
+    if (index || index  === 0) {
         isInputList.value[index] = false;
         props.nodeConfig.conditionNodes[index].nodeName = props.nodeConfig.conditionNodes[index].nodeName || "条件";
     } else {
@@ -207,7 +207,7 @@ const delTerm = (index) => {
     });
     resetConditionNodesErr()
     emits("update:nodeConfig", props.nodeConfig);
-    if (props.nodeConfig.conditionNodes.length == 1) {
+    if (props.nodeConfig.conditionNodes.length  ===  1) {
         if (props.nodeConfig.childNode) {
             if (props.nodeConfig.conditionNodes[0].childNode) {
                 reData(props.nodeConfig.conditionNodes[0].childNode, props.nodeConfig.childNode);
@@ -227,14 +227,14 @@ const reData = (data, addData) => {
 };
 const setPerson = (priorityLevel) => {
     var { type } = props.nodeConfig;
-    if (type == 0) {
+    if (type  ===  0) {
         setPromoter(true);
         setFlowPermission({
             value: props.flowPermission,
             flag: false,
             id: _uid,
         });
-    } else if (type == 1) {
+    } else if (type  ===  1) {
         setApprover(true);
         setApproverConfig({
             value: {
@@ -244,7 +244,7 @@ const setPerson = (priorityLevel) => {
             flag: false,
             id: _uid,
         });
-    } else if (type == 2) {
+    } else if (type  ===  2) {
         setCopyer(true);
         setCopyerConfig({
             value: JSON.parse(JSON.stringify(props.nodeConfig)),

@@ -11,21 +11,21 @@
     </p>
     <ul>
         <template v-for="({type, data, cancel}) in list" :key="type">
-          <template v-if="type === 'role'">
+          <template v-if="type  === 'role'">
             <li v-for="item in data" :key="item.roleId">
                 <img src="@/assets/images/icon_role.png">
                 <span>{{item.roleName}}</span>
                 <img src="@/assets/images/cancel.png" @click="cancel(item)">
             </li>
           </template>
-          <template v-if="type === 'department'">
+          <template v-if="type  === 'department'">
             <li v-for="item in data" :key="item.id">
                 <img src="@/assets/images/icon_file.png">
                 <span>{{item.departmentName}}</span>
                 <img src="@/assets/images/cancel.png" @click="cancel(item)">
             </li>
           </template>
-          <template v-if="type === 'employee'">
+          <template v-if="type  === 'employee'">
             <li v-for="item in data" :key="item.id">
                 <img src="@/assets/images/icon_people.png">
                 <span>{{item.employeeName}}</span>

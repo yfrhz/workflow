@@ -16,9 +16,9 @@
     <div class="fd-nav-content">
       <section class="dingflow-design">
         <div class="zoom">
-          <div class="zoom-out" :class="nowVal == 50 && 'disabled'" @click="zoomSize(1)"></div>
+          <div class="zoom-out" :class="nowVal  ===  50 && 'disabled'" @click="zoomSize(1)"></div>
           <span>{{ nowVal }}%</span>
-          <div class="zoom-in" :class="nowVal == 300 && 'disabled'" @click="zoomSize(2)"></div>
+          <div class="zoom-in" :class="nowVal  ===  300 && 'disabled'" @click="zoomSize(2)"></div>
         </div>
         <div class="box-scale" :style="`transform: scale(${ nowVal / 100});`">
           <nodeWrap v-model:nodeConfig="nodeConfig" v-model:flowPermission="flowPermission" />
@@ -81,7 +81,7 @@ const toReturn = () => {
 const reErr = ({ childNode }) => {
   if (childNode) {
     let { type, error, nodeName, conditionNodes } = childNode;
-    if (type == 1 || type == 2) {
+    if (type  ===  1 || type  ===  2) {
       if (error) {
         tipList.value.push({
           name: nodeName,
@@ -89,9 +89,9 @@ const reErr = ({ childNode }) => {
         });
       }
       reErr(childNode);
-    } else if (type == 3) {
+    } else if (type  ===  3) {
       reErr(childNode);
-    } else if (type == 4) {
+    } else if (type  ===  4) {
       reErr(childNode);
       for (var i = 0; i < conditionNodes.length; i++) {
         if (conditionNodes[i].error) {
@@ -108,7 +108,7 @@ const saveSet = async () => {
   setIsTried(true);
   tipList.value = [];
   reErr(nodeConfig.value);
-  if (tipList.value.length != 0) {
+  if (tipList.value.length  !==  0) {
     tipVisible.value = true;
     return;
   }
@@ -116,7 +116,7 @@ const saveSet = async () => {
   // eslint-disable-next-line no-console
   console.log(JSON.stringify(processConfig.value));
   let res = await setWorkFlowData(processConfig.value);
-  if (res.code == 200) {
+  if (res.code  ===  200) {
     ElMessage.success("设置成功")
     setTimeout(function () {
       window.location.href = "";
@@ -124,13 +124,13 @@ const saveSet = async () => {
   }
 };
 const zoomSize = (type) => {
-  if (type == 1) {
-    if (nowVal.value == 50) {
+  if (type  ===  1) {
+    if (nowVal.value  ===  50) {
       return;
     }
     nowVal.value -= 10;
   } else {
-    if (nowVal.value == 300) {
+    if (nowVal.value  ===  300) {
       return;
     }
     nowVal.value += 10;
