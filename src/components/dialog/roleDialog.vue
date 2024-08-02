@@ -43,9 +43,7 @@ let list = computed(() => {
     not: true,
     data: roles.value,
     isActive: (item) => $func.toggleClass(checkedRoleList.value, item, 'roleId'),
-    change: (item) => {
-      checkedRoleList.value = [item]
-    }
+    change: (item) =>  $func.toChecked(checkedRoleList.value, item,'roleId')
   }]
 })
 let resList = computed(() => {

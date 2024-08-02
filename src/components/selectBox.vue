@@ -12,7 +12,7 @@
           class="check_box"
           :class="{active: elem.isActive && elem.isActive(item), not: elem.not}" 
           @click="elem.change(item)">
-          <a :title="item.description" :class="{active: elem.isActiveItem && elem.isActiveItem(item)}">
+          <a :title="item.description" :class="{active: elem.isActive && elem.isActive(item)}">
             <img src="@/assets/images/icon_role.png">{{item.roleName}}
           </a>
         </li>
